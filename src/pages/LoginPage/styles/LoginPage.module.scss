@@ -1,0 +1,25 @@
+.wrapper {
+  height: 100vh;
+  display: flex;
+  background: #2e2b47;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.carouselWrapper {
+  flex: 1;
+  max-width: 600px;
+  min-width: 400px;
+  height:  auto;
+  overflow: hidden;
+}
+
+.formWrapper {
+  flex: 1;
+  max-width: 500px;
+  background: #1e1d30;
+  padding: 50px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}

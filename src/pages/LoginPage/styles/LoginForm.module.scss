@@ -1,0 +1,28 @@
+.form{
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input{
+  background-color: #f9f9f9;
+}
+
+.button{
+  font-weight: bold;
+}
+
+
+.checkbox{
+align-self: flex-start;
+}
+
+
+
+
+.divider{
+margin: 12px 0;
+}
+
