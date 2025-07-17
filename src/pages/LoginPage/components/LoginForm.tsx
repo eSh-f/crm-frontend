@@ -9,17 +9,56 @@ import {
   Typography,
 } from '@mui/material'
 import styles from '../styles/LoginForm.module.scss'
+import { useLoginMutation } from '../../../shared/api/authApi'
+import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { loginSuccess } from '../../../shared/store/userSlice'
+import { useDispatch } from 'react-redux'
+
+type FormData = {
+  email: string
+  password: string
+}
 
 const LoginForm = () => {
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate()
+  const [loginUser, { isLoading }] = useLoginMutation()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>()
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      const res = await loginUser(data).unwrap()
+
+      dispatch(loginSuccess({ token: res.token, role: res.user.role }))
+      if (res.user.role === 'freelancer') {
+        navigate('/freelancer/dashboard')
+      } else {
+        navigate('/client/dashboard')
+      }
+    } catch (err: any) {
+      alert(err?.data?.error || 'Неверный логин или пароль')
+    }
+  }
+
   return (
-    <Box className={styles.form}>
+    <Box
+      component="form"
+      className={styles.form}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Typography variant="h5" fontWeight="bold">
         С возвращением!
       </Typography>
 
       <Typography variant="body2">
-        Нет аккаунта?
-        <Link href="#" underline="hover">
+        Нет аккаунта?{' '}
+        <Link href="/register" underline="hover">
           Зарегистрироваться
         </Link>
       </Typography>
@@ -29,6 +68,9 @@ const LoginForm = () => {
         type="email"
         fullWidth
         className={styles.input}
+        {...register('email', { required: 'Email обязателен' })}
+        error={!!errors.email}
+        helperText={errors.email?.message}
       />
 
       <TextField
@@ -36,6 +78,9 @@ const LoginForm = () => {
         type="password"
         fullWidth
         className={styles.input}
+        {...register('password', { required: 'Пароль обязателен' })}
+        error={!!errors.password}
+        helperText={errors.password?.message}
       />
 
       <FormControlLabel
@@ -44,8 +89,14 @@ const LoginForm = () => {
         className={styles.checkbox}
       />
 
-      <Button variant="contained" fullWidth className={styles.button}>
-        Войти
+      <Button
+        type="submit"
+        variant="contained"
+        fullWidth
+        className={styles.button}
+        disabled={isLoading}
+      >
+        {isLoading ? 'Вход...' : 'Войти'}
       </Button>
 
       <Divider className={styles.divider}>или</Divider>
@@ -55,7 +106,7 @@ const LoginForm = () => {
       </Button>
 
       <Typography align="center" variant="body2">
-        Забыли пароль?
+        Забыли пароль?{' '}
         <Link href="#" underline="hover">
           Восстановить
         </Link>
