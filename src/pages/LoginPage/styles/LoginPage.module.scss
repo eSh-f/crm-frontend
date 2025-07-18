@@ -2,37 +2,93 @@
   height: 100vh;
   display: flex;
   background: #2e2b47;
-  gap: 40px;
-  justify-content: center;
-  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 .carouselWrapper {
   flex: 1;
-  max-width: 600px;
-  min-width: 400px;
+  max-width: 800px;
+  min-width: 1000px;
   height:  auto;
   overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 
 .formWrapper {
   flex: 1;
-  max-width: 500px;
-  background: #1e1d30;
+  width: 150%;
   padding: 50px;
   color: white;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height:  auto;
+  overflow: hidden;
 }
 
 .switchText {
   margin-top: 16px;
   text-align: center;
-
   button {
     background: none;
     border: none;
     color: #915EFF;
     cursor: pointer;
     font-weight: bold;
+  }
+}
+
+@media (max-width: 1200px) {
+  .carouselWrapper {
+    min-width: 600px;
+    max-width: 600px;
+  }
+  .formWrapper {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 900px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    height: auto;
+  }
+  .carouselWrapper {
+    min-width: 100vw;
+    max-width: 100vw;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 0;
+    height: 220px;
+  }
+  .formWrapper {
+    width: 100vw;
+    border-radius: 0;
+    padding: 24px 8px;
+    min-height: 60vh;
+  }
+}
+
+@media (max-width: 600px) {
+  .carouselWrapper {
+    display: none;
+  }
+  .formWrapper {
+    width: 100vw;
+    padding: 16px 4px;
+    min-height: 100vh;
+    border-radius: 0;
+  }
+  .wrapper {
+    padding: 0;
+    min-height: 100vh;
   }
 }

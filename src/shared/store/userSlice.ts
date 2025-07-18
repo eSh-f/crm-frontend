@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 type UserData = {
+  id: number
   name: string
   email: string
   avatar?: string
@@ -26,11 +27,17 @@ const userSlice = createSlice({
   reducers: {
     loginSuccess(
       state,
-      action: PayloadAction<{ token: string; role: string }>,
+      action: PayloadAction<{ token: string; role: string; id: number; name: string; email: string; avatar?: string }>,
     ) {
       state.token = action.payload.token
       state.role = action.payload.role
       state.isAuthenticated = true
+      state.data = {
+        id: action.payload.id,
+        name: action.payload.name,
+        email: action.payload.email,
+        avatar: action.payload.avatar,
+      }
       localStorage.setItem('token', action.payload.token)
       localStorage.setItem('role', action.payload.role)
     },

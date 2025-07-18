@@ -1,0 +1,196 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 12px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.createBtn {
+  margin-bottom: 24px;
+  padding: 10px 0;
+  width: 100%;
+  font-size: 1rem;
+  background: #2d72d9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.createBtn:hover {
+  background: #1a4e96;
+}
+
+.form {
+  margin-bottom: 24px;
+  max-width: 400px;
+  background: #f7f8fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.input, .textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #fff;
+}
+.textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+.formError {
+  color: #e53935;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+.formActions {
+  display: flex;
+  gap: 8px;
+}
+.submitBtn, .cancelBtn {
+  padding: 8px;
+  flex: 1;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.submitBtn {
+  background: #2d72d9;
+  color: #fff;
+}
+.submitBtn:disabled {
+  background: #b3c7e6;
+  cursor: not-allowed;
+}
+.cancelBtn {
+  background: #e0e0e0;
+  color: #333;
+}
+.ordersTitle {
+  font-size: 1.3rem;
+  margin: 24px 0 12px 0;
+}
+.ordersList {
+  list-style: none;
+  padding: 0;
+}
+.orderItem {
+  margin-bottom: 1rem;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.orderTitle {
+  font-weight: 500;
+}
+.orderStatus {
+  margin-left: 8px;
+  color: #888;
+  font-size: 0.95rem;
+}
+.orderChatLink {
+  margin-left: 12px;
+  color: #2d72d9;
+  text-decoration: underline;
+  font-size: 0.98rem;
+}
+.deleteBtn {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.deleteBtn:disabled {
+  background: #f7bdbd;
+  cursor: not-allowed;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.25);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  padding: 32px 28px 24px 28px;
+  min-width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.modalText {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.modalActions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.tab {
+  background: #f2f4f8;
+  color: #333;
+  border: none;
+  border-radius: 6px 6px 0 0;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.tab:hover {
+  background: #e0e7ef;
+}
+.tabActive {
+  background: #2d72d9;
+  color: #fff;
+  font-weight: 600;
+}
+.deletedMark {
+  color: #e53935;
+  font-size: 0.98rem;
+  margin-left: 8px;
+  font-weight: 500;
+} 

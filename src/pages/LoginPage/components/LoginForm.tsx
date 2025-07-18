@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { loginSuccess } from '../../../shared/store/userSlice'
 import { useDispatch } from 'react-redux'
+import GitHubIcon from '@mui/icons-material/GitHub'
 
 type FormData = {
   email: string
@@ -35,7 +36,16 @@ const LoginForm = () => {
     try {
       const res = await loginUser(data).unwrap()
 
-      dispatch(loginSuccess({ token: res.token, role: res.user.role }))
+      dispatch(
+        loginSuccess({
+          token: res.token,
+          role: res.user.role,
+          id: res.user.id,
+          name: res.user.name,
+          email: res.user.email,
+          avatar: res.user.avatar,
+        }),
+      )
       if (res.user.role === 'freelancer') {
         navigate('/freelancer/dashboard')
       } else {
@@ -52,15 +62,8 @@ const LoginForm = () => {
       className={styles.form}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Typography variant="h5" fontWeight="bold">
-        С возвращением!
-      </Typography>
-
-      <Typography variant="body2">
-        Нет аккаунта?{' '}
-        <Link href="/register" underline="hover">
-          Зарегистрироваться
-        </Link>
+      <Typography variant="h3" fontWeight="bold">
+        С возвращением в CRM !
       </Typography>
 
       <TextField
@@ -68,6 +71,7 @@ const LoginForm = () => {
         type="email"
         fullWidth
         className={styles.input}
+        variant="filled"
         {...register('email', { required: 'Email обязателен' })}
         error={!!errors.email}
         helperText={errors.email?.message}
@@ -78,6 +82,7 @@ const LoginForm = () => {
         type="password"
         fullWidth
         className={styles.input}
+        variant="filled"
         {...register('password', { required: 'Пароль обязателен' })}
         error={!!errors.password}
         helperText={errors.password?.message}
@@ -100,9 +105,17 @@ const LoginForm = () => {
       </Button>
 
       <Divider className={styles.divider}>или</Divider>
-
-      <Button variant="contained" fullWidth className={styles.button}>
-        Войти через Google
+      <Button
+        variant="outlined"
+        fullWidth
+        className={styles.button}
+        startIcon={<GitHubIcon style={{ color: 'white' }} />}
+        style={{ color: 'white', borderColor: 'white' }}
+        onClick={() => {
+          window.location.href = `https://github.com/login/oauth/authorize?client_id=Ov23likZMAxFY1ScKMf7&scope=read:user,user:email`
+        }}
+      >
+        Войти через GitHub
       </Button>
 
       <Typography align="center" variant="body2">

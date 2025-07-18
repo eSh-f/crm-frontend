@@ -1,10 +1,22 @@
-import { useNavigate } from 'react-router-dom'
-import styles from '../styles/RegisterForm.module.scss'
 import {
-  useRegisterMutation,
-  useLoginMutation,
-} from '../../../shared/api/authApi'
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Link,
+  MenuItem,
+  TextField,
+  Typography,
+  Select,
+  InputLabel,
+  FormControl,
+} from '@mui/material'
+import styles from '../styles/LoginForm.module.scss'
+import { useRegisterMutation, useLoginMutation } from '../../../shared/api/authApi'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import GitHubIcon from '@mui/icons-material/GitHub'
 
 type FormData = {
   name: string
@@ -30,27 +42,19 @@ const RegisterForm = () => {
       alert('Пароли не совпадают')
       return
     }
-
     try {
-      // Сначала регистрация
       await registerUser({
         name: data.name,
         email: data.email,
         password: data.password,
         role: data.role,
       }).unwrap()
-
-      // Затем логин
       const loginRes = await loginUser({
         email: data.email,
         password: data.password,
       }).unwrap()
-
-      // Сохраняем токен и роль
       localStorage.setItem('token', loginRes.token)
       localStorage.setItem('role', loginRes.user.role)
-
-      // Перенаправляем по роли
       if (loginRes.user.role === 'freelancer') {
         navigate('/freelancer/dashboard')
       } else if (loginRes.user.role === 'client') {
@@ -64,49 +68,100 @@ const RegisterForm = () => {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <h2>Регистрация</h2>
-
-      <input
-        type="text"
-        placeholder="Имя"
+    <Box
+      component="form"
+      className={styles.form}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Typography variant="h3" fontWeight="bold">
+        Регистрация
+      </Typography>
+      <Typography variant="body2">
+        Уже есть аккаунт?{' '}
+        <Link href="/login" underline="hover">
+          Войти
+        </Link>
+      </Typography>
+      <TextField
+        label="Имя"
+        fullWidth
+        className={styles.input}
+        variant="filled"
         {...register('name', { required: 'Имя обязательно' })}
+        error={!!errors.name}
+        helperText={errors.name?.message}
       />
-      {errors.name && <p>{errors.name.message}</p>}
-
-      <input
+      <TextField
+        label="Email"
         type="email"
-        placeholder="Email"
+        fullWidth
+        className={styles.input}
+        variant="filled"
         {...register('email', { required: 'Email обязателен' })}
+        error={!!errors.email}
+        helperText={errors.email?.message}
       />
-      {errors.email && <p>{errors.email.message}</p>}
-
-      <input
+      <TextField
+        label="Пароль"
         type="password"
-        placeholder="Пароль"
+        fullWidth
+        className={styles.input}
+        variant="filled"
         {...register('password', {
           required: 'Пароль обязателен',
           minLength: { value: 6, message: 'Минимум 6 символов' },
         })}
+        error={!!errors.password}
+        helperText={errors.password?.message}
       />
-      {errors.password && <p>{errors.password.message}</p>}
-
-      <input
+      <TextField
+        label="Повторите пароль"
         type="password"
-        placeholder="Повторите пароль"
-        {...register('confirmPassword', {
-          required: 'Повторите пароль',
-        })}
+        fullWidth
+        className={styles.input}
+        variant="filled"
+        {...register('confirmPassword', { required: 'Повторите пароль' })}
+        error={!!errors.confirmPassword}
+        helperText={errors.confirmPassword?.message}
       />
-      {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
-
-      <select {...register('role', { required: true })}>
-        <option value="freelancer">Фрилансер</option>
-        <option value="client">Заказчик</option>
-      </select>
-
-      <button type="submit">Создать аккаунт</button>
-    </form>
+      <FormControl fullWidth className={styles.input}>
+        {/* Убрали InputLabel */}
+        <Select
+          defaultValue="freelancer"
+          displayEmpty
+          {...register('role', { required: true })}
+        >
+          <MenuItem value="freelancer">Фрилансер</MenuItem>
+          <MenuItem value="client">Заказчик</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControlLabel
+        control={<Checkbox required />}
+        label="Я согласен с условиями использования"
+        className={styles.checkbox}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        fullWidth
+        className={styles.button}
+      >
+        Создать аккаунт
+      </Button>
+      <Divider className={styles.divider}>или</Divider>
+      <Button
+        variant="outlined"
+        fullWidth
+        className={styles.button}
+        startIcon={<GitHubIcon style={{ color: 'white' }} />}
+        style={{ color: 'white', borderColor: 'white' }}
+        onClick={() => {
+          window.location.href = `https://github.com/login/oauth/authorize?client_id=Ov23likZMAxFY1ScKMf7&scope=read:user,user:email`
+        }}
+      >
+        Зарегистрироваться через GitHub
+      </Button>
+    </Box>
   )
 }
 
